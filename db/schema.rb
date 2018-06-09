@@ -86,6 +86,29 @@ ActiveRecord::Schema.define(version: 20180607102014) do
     t.index ["home_id"], name: "index_bed_types_on_home_id"
   end
 
+  create_table "countries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "currencies", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "favorite_lists", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "favorites", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "home_category_main_subs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "home_category_sub_id"
     t.bigint "home_category_main_id"
@@ -134,6 +157,32 @@ ActiveRecord::Schema.define(version: 20180607102014) do
     t.index ["home_id"], name: "index_home_notifications_on_home_id"
   end
 
+  create_table "home_reservations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.datetime "checkin_date", null: false
+    t.datetime "checkout_date", null: false
+    t.integer "number_of_guests", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "accomodation_fee", null: false
+    t.integer "clieaning_fee", null: false
+    t.integer "sevice_fee", null: false
+    t.integer "total_price", null: false
+    t.integer "cleaning_fee", null: false
+    t.integer "service_fee", null: false
+  end
+
+  create_table "home_reviews", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.text "review", null: false
+    t.integer "accuracy_rate", null: false
+    t.integer "location_rate", null: false
+    t.integer "communication_rate", null: false
+    t.integer "cleanliness_rate", null: false
+    t.integer "checkin_rate", null: false
+    t.integer "cost_performance_rate", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "home_rules", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.boolean "accept_kids", default: false
     t.text "kids_reason"
@@ -165,6 +214,29 @@ ActiveRecord::Schema.define(version: 20180607102014) do
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_homes_on_name"
     t.index ["town"], name: "index_homes_on_town"
+  end
+
+  create_table "languages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "listing_photo_homes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "listing_photos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.text "image", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "messages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.text "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "overviews", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180608090243) do
+ActiveRecord::Schema.define(version: 20180614024148) do
 
   create_table "additional_home_rules", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "content", null: false
@@ -168,11 +168,16 @@ ActiveRecord::Schema.define(version: 20180608090243) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "accomodation_fee", null: false
+<<<<<<< HEAD
     # t.integer "clieaning_fee", null: false
     # t.integer "sevice_fee", null: false
     # t.integer "total_price", null: false
     t.integer "cleaning_fee", null: false
     t.integer "service_fee", null: false
+=======
+    t.integer "clieaning_fee", null: false
+    t.integer "sevice_fee", null: false
+>>>>>>> dce23f2029dce7a8834d483bce82988a18dc6bc9
     t.integer "total_price", null: false
 
   end
@@ -207,7 +212,7 @@ ActiveRecord::Schema.define(version: 20180608090243) do
     t.integer "capacity", null: false
     t.integer "number_of_bedroom", null: false
     t.integer "number_of_bathroom", null: false
-    t.boolean "bathroom_for_guest", null: false
+    t.integer "number_of_beds", null: false
     t.string "postalcode", null: false
     t.string "prefecture", null: false
     t.string "town", null: false
@@ -218,8 +223,18 @@ ActiveRecord::Schema.define(version: 20180608090243) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "home_category_sub_id"
+    t.bigint "country_id"
+    t.bigint "room_type_id"
+    t.bigint "currency_id"
+    t.bigint "user_id"
+    t.index ["country_id"], name: "index_homes_on_country_id"
+    t.index ["currency_id"], name: "index_homes_on_currency_id"
+    t.index ["home_category_sub_id"], name: "index_homes_on_home_category_sub_id"
     t.index ["name"], name: "index_homes_on_name"
+    t.index ["room_type_id"], name: "index_homes_on_room_type_id"
     t.index ["town"], name: "index_homes_on_town"
+    t.index ["user_id"], name: "index_homes_on_user_id"
   end
 
   create_table "languages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -228,18 +243,13 @@ ActiveRecord::Schema.define(version: 20180608090243) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "listing_photo_homes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "listing_photo_id", null: false
-    t.index ["listing_photo_id"], name: "index_listing_photo_homes_on_listing_photo_id"
-  end
-
   create_table "listing_photos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "image", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.bigint "home_id"
+    t.index ["home_id"], name: "index_listing_photos_on_home_id"
     t.index ["user_id"], name: "index_listing_photos_on_user_id"
   end
 
@@ -319,6 +329,7 @@ ActiveRecord::Schema.define(version: 20180608090243) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "status", null: false
+    t.integer "superhost", default: 0
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["country_id"], name: "index_users_on_country_id"
     t.index ["currency_id"], name: "index_users_on_currency_id"
@@ -337,7 +348,12 @@ ActiveRecord::Schema.define(version: 20180608090243) do
   add_foreign_key "favorites", "favorite_lists"
   add_foreign_key "home_notifications", "homes"
   add_foreign_key "home_rules", "homes"
-  add_foreign_key "listing_photo_homes", "listing_photos"
+  add_foreign_key "homes", "countries"
+  add_foreign_key "homes", "currencies"
+  add_foreign_key "homes", "home_category_subs"
+  add_foreign_key "homes", "room_types"
+  add_foreign_key "homes", "users"
+  add_foreign_key "listing_photos", "homes"
   add_foreign_key "listing_photos", "users"
   add_foreign_key "messages", "users"
   add_foreign_key "overviews", "homes"
